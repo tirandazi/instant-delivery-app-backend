@@ -1,0 +1,4 @@
+ALTER TABLE orders
+ALTER COLUMN payment_mode SET NOT NULL,
+ALTER COLUMN delivery_status SET NOT NULL,
+ALTER COLUMN total_amount SET NOT NULL;

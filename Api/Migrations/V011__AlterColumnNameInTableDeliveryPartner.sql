@@ -1,0 +1,3 @@
+ALTER TABLE delivery_partner
+ALTER COLUMN name
+SET NOT NULL;
