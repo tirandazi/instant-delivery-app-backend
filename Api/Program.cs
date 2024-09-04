@@ -1,10 +1,14 @@
+using Api.DbConfig;
+using Api.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using OpenTelemetry.Trace;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -19,6 +23,10 @@ builder.Services.AddOpenTelemetry()
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
         .AddConsoleExporter());
+
+// DB Connections
+builder.Services.AddDbContext<InstantAppDbContext>(options => 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDbConnection")));
 
 var app = builder.Build();
 

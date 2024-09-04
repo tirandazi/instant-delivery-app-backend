@@ -1,6 +1,6 @@
 CREATE TABLE cart_items (
-  cart_id BIGINT,
-  product_id BIGINT,
+  cart_id UUID,
+  product_id UUID,
   quantity INT,
   price MONEY,
   FOREIGN KEY (cart_id) REFERENCES cart(id),

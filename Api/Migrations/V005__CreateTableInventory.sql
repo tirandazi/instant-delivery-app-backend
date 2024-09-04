@@ -1,6 +1,6 @@
 CREATE TABLE inventory (
-  store_id BIGINT,
-  product_id BIGINT,
+  store_id UUID,
+  product_id UUID,
   quantity INT,
   FOREIGN KEY (store_id) REFERENCES store(id),
   FOREIGN KEY (product_id) REFERENCES products(id),
