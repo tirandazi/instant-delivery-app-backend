@@ -1,5 +1,9 @@
-using Api.DbConfig;
+using Api.Data;
+using Api.Data.Repository;
+using Api.Data.Repository.Contracts;
+using Api.Mappings;
 using Api.Service;
+using Api.Service.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Trace;
@@ -8,8 +12,11 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<IProductService ,ProductService>();
+builder.Services.AddScoped<IProductsRepository,ProductsRepository>();
 builder.Services.AddControllers();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -2,23 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.DbConfig;
+using Api.Data.Repository.Contracts;
 using Api.Model;
+using Api.Model.Domain;
+using Api.Service.Contracts;
 
 namespace Api.Service
 {
 
-    public class ProductService
-    {
-        private InstantAppDbContext _instantDbContext;
-        public ProductService(InstantAppDbContext instantDbContext) {
-            _instantDbContext = instantDbContext;
-        }
+  public class ProductService : IProductService
+  {
+    private readonly IProductsRepository productsRepository;
 
-        public List<Product> GetAllProducts() {
-            var products = _instantDbContext.products.ToList();
-            // var products = new List<Product>();
-            return products;
-        }
+    public ProductService(IProductsRepository productsRepository)
+    {
+      this.productsRepository = productsRepository;
     }
+    public async Task<List<Product>> GetAllProductsAsync()
+    {
+      return await productsRepository.GetAllAsync();
+    }
+
+    public Task<Product?> GetProductByIdAsync(Guid id)
+    {
+      return productsRepository.GetByIdAsync(id);
+    }
+  }
 }

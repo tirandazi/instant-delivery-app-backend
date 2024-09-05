@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Service;
+using Api.Model.DTO;
+using Api.Service.Contracts;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -11,16 +13,21 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private ProductService _productService;
+        private IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductController(ProductService productService) {
+        public ProductController(IProductService productService, IMapper mapper)
+        {
             _productService = productService;
+            this._mapper = mapper;
         }
-        
+
         [HttpGet]
-        public IActionResult GetAllProducts() {
-            var products = _productService.GetAllProducts();
-            return Ok(products);
+        public async Task<IActionResult> GetAllProducts()
+        {
+            var productsDomain = await _productService.GetAllProductsAsync();
+            var productHOmeDTOs=_mapper.Map<List<ProductHomeDTO>>(productsDomain);
+            return Ok(productHOmeDTOs);
         }
     }
 }

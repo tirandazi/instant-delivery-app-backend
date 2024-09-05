@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Model;
+using Api.Model.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.DbConfig
+namespace Api.Data
 {
     public class InstantAppDbContext : DbContext
     {
