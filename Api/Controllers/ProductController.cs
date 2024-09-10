@@ -26,8 +26,18 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAllProducts()
         {
             var productsDomain = await _productService.GetAllProductsAsync();
-            var productHOmeDTOs=_mapper.Map<List<ProductHomeDTO>>(productsDomain);
-            return Ok(productHOmeDTOs);
+            var productHomeDTOs=_mapper.Map<List<ProductHomeDTO>>(productsDomain);
+            return Ok(productHomeDTOs);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductByID(Guid id)
+        {
+            var productDomain=await _productService.GetProductByIdAsync(id);
+            if (productDomain == null){
+                return NotFound();
+            }
+            return Ok(_mapper.Map<ProductInfoDTO>(productDomain));
         }
     }
 }

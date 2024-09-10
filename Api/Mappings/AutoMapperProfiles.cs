@@ -13,6 +13,7 @@ namespace Api.Mappings
         public AutoMapperProfiles()
         {
             CreateMap<ProductHomeDTO,Product>().ReverseMap();
+            CreateMap<ProductInfoDTO,Product>().ReverseMap();
         }
     }
 }
