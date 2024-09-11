@@ -66,6 +66,8 @@ IDA is an instant delivery app where prospective buyers can place orders for dai
     In terminal, run the following command :
 
     ```bash
+    set -a
+    
     source .env
     ```
 
@@ -76,22 +78,21 @@ IDA is an instant delivery app where prospective buyers can place orders for dai
     docker-compose up 
     ```
 
+   Seed the data into the database tables
+      - Run the script `sh data-seeder.sh`
+
     To get into the  DB container and view data
 
     ```bash
      docker exec -it <container_name> psql -h localhost -U idauser -d instant_delivery_app
     ```
 
-5. **Start the .NET backend with hot relaod**:
+6. **Start the .NET backend with hot relaod**:
 
     ```bash
-    cd Api
+    dotnet watch run --project Api/
     ```
-
-    ```bash
-    dotnet watch run
-    ```
-6. **To run the tests**:
+7. **To run the tests**:
 
     Get to main folder containg Api and Test folders
     ```bash
