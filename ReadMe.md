@@ -87,7 +87,7 @@ IDA is an instant delivery app where prospective buyers can place orders for dai
      docker exec -it <container_name> psql -h localhost -U idauser -d instant_delivery_app
     ```
 
-6. **Start the .NET backend with hot relaod**:
+6. **Start the .NET backend with hot reload**:
 
     ```bash
     dotnet watch run --project Api/
@@ -102,3 +102,4 @@ IDA is an instant delivery app where prospective buyers can place orders for dai
     ```bash
     dotnet test
     ```
+

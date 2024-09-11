@@ -16,14 +16,16 @@ namespace Api.Data.Repository
     {
       _instantAppDbContext = instantAppDbContext;
     }
-    public  async Task<List<Product>> GetAllAsync()
+    public  async Task<List<Product>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
     {
-        return await _instantAppDbContext.products.ToListAsync();
+        var skipResults=(pageNumber - 1) * pageSize;
+
+        return await _instantAppDbContext.products.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
-    public Task<Product?> GetByIdAsync(Guid id)
+    public async Task<Product?> GetByIdAsync(Guid id)
     {
-      return _instantAppDbContext.products.FirstOrDefaultAsync(x => x.id == id);
+      return await _instantAppDbContext.products.FirstOrDefaultAsync(x => x.id == id);
     }
   }
 }

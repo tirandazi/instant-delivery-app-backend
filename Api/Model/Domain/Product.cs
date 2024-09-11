@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Api.Model.Domain
+
 {
     public class Product
     {

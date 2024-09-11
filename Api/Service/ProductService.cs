@@ -18,14 +18,14 @@ namespace Api.Service
     {
       this.productsRepository = productsRepository;
     }
-    public async Task<List<Product>> GetAllProductsAsync()
+    public async Task<List<Product>> GetAllProductsAsync(int pageNumber=1, int pageSize=10)
     {
-      return await productsRepository.GetAllAsync();
+      return await productsRepository.GetAllAsync(pageNumber,pageSize);
     }
 
-    public Task<Product?> GetProductByIdAsync(Guid id)
+    public async Task<Product?> GetProductByIdAsync(Guid id)
     {
-      return productsRepository.GetByIdAsync(id);
+      return await productsRepository.GetByIdAsync(id);
     }
   }
 }
