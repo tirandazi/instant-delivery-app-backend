@@ -32,14 +32,14 @@ namespace Test.ControllerTests
             // Arrange
             var products = new List<Product>
             {
-                new Product { id = Guid.Empty, product_code="12345678901", name="test", description="test dummy", price=23, date=DateOnly.FromDateTime(DateTime.Now) },
-                new Product { id = Guid.Empty, product_code="12345678901", name="test 2", description="test dummy 2", price=24, date=DateOnly.FromDateTime(DateTime.Now) }
+                new() { id = Guid.Empty, product_code="12345678901", name="test", description="test dummy", price=23, date=DateOnly.FromDateTime(DateTime.Now) },
+                new() { id = Guid.Empty, product_code="12345678901", name="test 2", description="test dummy 2", price=24, date=DateOnly.FromDateTime(DateTime.Now) }
             };
 
             var expectedDTOs = new List<ProductHomeDTO>
             {
-                new ProductHomeDTO { name="test", price=23 },
-                new ProductHomeDTO { name="test 2", price=24 }
+                new() { name="test", price=23 },
+                new() { name="test 2", price=24 }
             };
             _mockProductService.Setup(service => service.GetAllProductsAsync()).ReturnsAsync(products);
             _mockMapper.Setup(mapper => mapper.Map<List<ProductHomeDTO>>(products)).Returns(expectedDTOs);
