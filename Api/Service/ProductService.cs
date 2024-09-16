@@ -22,7 +22,6 @@ namespace Api.Service
     {
       return await productsRepository.GetAllAsync(pageNumber,pageSize);
     }
-
     public async Task<Product?> GetProductByIdAsync(Guid id)
     {
       return await productsRepository.GetByIdAsync(id);

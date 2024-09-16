@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<IProductsRepository,ProductsRepository>();
 builder.Services.AddScoped<IProductService ,ProductService>();
+builder.Services.AddScoped<IOTPService,OTPService>();
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));

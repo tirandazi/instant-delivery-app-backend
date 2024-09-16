@@ -1,0 +1,3 @@
+ALTER TABLE otprecord
+ADD COLUMN secret VARCHAR NOT NULL
+DEFAULT 'none';

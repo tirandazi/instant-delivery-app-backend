@@ -12,5 +12,6 @@ namespace Api.Data
         public InstantAppDbContext(DbContextOptions options) : base(options) {}
 
         public DbSet<Product> products{ get; set; }
+        public DbSet<OTPRecord> otprecord { get; set; }
     }
 }
