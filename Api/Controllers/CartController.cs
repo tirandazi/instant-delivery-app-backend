@@ -35,5 +35,12 @@ namespace Api.Controllers
             var cart = await _cartService.GetCartAsync(cart_id.Value);
             return Ok(cart);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCart([FromQuery] Guid customer_id){
+            var cart_id=await _cartService.FindCartByCustomerID(customer_id);
+            var cart= await _cartService.GetCartAsync(cart_id.Value);
+            return Ok(cart);
+        }
     }
 }

@@ -13,6 +13,6 @@ namespace Api.Data.Repository.Contracts
         Task AddAsync(Cart cart);
         Task UpdateAsync(Cart cart);
         Task DeleteAsync(Guid id);
-        Task<Cart> FirstOrDefaultAsync(Expression<Func<Cart, bool>> predicate);
+        Task<Cart?> FindCartByCustomerId(Guid id);
     }
 }

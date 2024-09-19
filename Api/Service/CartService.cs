@@ -36,36 +36,36 @@ namespace Api.Service
             var cart = await _cartRepository.GetByIdAsync(cartId);
             if (cart != null)
             {
-                cart.Items.Add(item);
+                //cart.Items.Add(item);
                 await _cartItemRepository.AddAsync(item);
                 await _cartRepository.UpdateAsync(cart);
             }
         }
 
-        public async Task RemoveItemFromCartAsync(Guid cartId, Guid product_id)
+        public async Task RemoveItemFromCartAsync(Guid cart_id, Guid product_id)
         {
-            var cart = await _cartRepository.GetByIdAsync(cartId);
+            var cart = await _cartRepository.GetByIdAsync(cart_id);
             if (cart != null)
             {
-                var item = await _cartItemRepository.GetByIdAsync(cartId, product_id);
+                var item = await _cartItemRepository.GetByIdAsync(cart_id, product_id);
                 if (item != null)
                 {
-                    cart.Items.Remove(item);
-                    await _cartItemRepository.DeleteAsync(cartId, product_id);
+                    //cart.Items.Remove(item);
+                    await _cartItemRepository.DeleteAsync(cart_id, product_id);
                     await _cartRepository.UpdateAsync(cart);
                 }
             }
         }
 
-        public async Task<decimal> GetCartTotalPriceAsync(Guid cartId)
-        {
-            var cart = await _cartRepository.GetByIdAsync(cartId);
-            return cart != null ? cart.GetTotalPrice() : 0;
-        }
+        // public async Task<decimal> GetCartTotalPriceAsync(Guid cartId)
+        // {
+        //     var cart = await _cartRepository.GetByIdAsync(cartId);
+        //     return cart != null ? cart.GetTotalPrice() : 0;
+        // }
 
         public async Task<Guid?> FindCartByCustomerID(Guid customer_id)
         {
-            var cart = await _cartRepository.FirstOrDefaultAsync(x => x.customer_id == customer_id);
+            var cart = await _cartRepository.FindCartByCustomerId(customer_id);
             return cart?.id;
         }
     }

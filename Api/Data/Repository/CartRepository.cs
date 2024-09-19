@@ -20,7 +20,7 @@ namespace Api.Data.Repository
 
         public async Task<Cart> GetByIdAsync(Guid id)
         {
-            var cart = await _context.cart.Include(c => c.Items).FirstOrDefaultAsync(c => c.id == id);
+            var cart = await _context.cart.FirstOrDefaultAsync(c => c.id == id);
             return cart;
         }
 
@@ -46,9 +46,10 @@ namespace Api.Data.Repository
             }
         }
 
-        public async Task<Cart> FirstOrDefaultAsync(Expression<Func<Cart, bool>> predicate)
+        public async Task<Cart?> FindCartByCustomerId(Guid id)
         {
-            return await _context.cart.FirstOrDefaultAsync(predicate);
+      //return await _context.cart.Where(c => c.customer_id == id).ToListAsync();
+            return await _context.cart.FirstOrDefaultAsync(c=> c.customer_id == id);
         }
     }
 }

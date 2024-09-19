@@ -12,7 +12,7 @@ namespace Api.Service.Contracts
         Task<Cart> GetCartAsync(Guid id);
         Task AddItemToCartAsync(Guid cartId, CartItems item);
         Task RemoveItemFromCartAsync(Guid cartId, Guid itemId);
-        Task<decimal> GetCartTotalPriceAsync(Guid cartId);
+        // Task<decimal> GetCartTotalPriceAsync(Guid cartId);
     Task<Guid?> FindCartByCustomerID(Guid customer_id);
   }
 }
