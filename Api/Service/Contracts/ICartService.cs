@@ -14,5 +14,6 @@ namespace Api.Service.Contracts
         Task RemoveItemFromCartAsync(Guid cartId, Guid itemId);
         // Task<decimal> GetCartTotalPriceAsync(Guid cartId);
     Task<Guid?> FindCartByCustomerID(Guid customer_id);
+    Task<List<CartItems>> GetAllCartItemsAsync(Guid cart_id);
   }
 }

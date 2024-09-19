@@ -68,5 +68,10 @@ namespace Api.Service
             var cart = await _cartRepository.FindCartByCustomerId(customer_id);
             return cart?.id;
         }
+
+    public async Task<List<CartItems>> GetAllCartItemsAsync(Guid cart_id)
+    {
+      return await _cartItemRepository.GetAllCartItemsAsync(cart_id);
     }
+  }
 }

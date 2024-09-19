@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Data.Repository.Contracts;
 using Api.Model.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data.Repository
 {
@@ -40,6 +41,10 @@ namespace Api.Data.Repository
                 _context.cart_items.Remove(item);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<CartItems>> GetAllCartItemsAsync(Guid cart_id){
+            return await _context.cart_items.Where(x => x.cart_id == cart_id).ToListAsync();
         }
     }
 }
