@@ -25,7 +25,7 @@ namespace Api.Service
             var otp = new Totp(secret).ComputeTotp();
             //var expiry=TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,TimeZoneInfo.Local).Add(OtpExpiryDuration);
             var expiry = DateTime.UtcNow.Add(OtpExpiryDuration);
-            Log.Information("EXPIRYYYYYYYYYYYYYYYYYYYYYYYYY" + expiry);
+            //Log.Information("EXPIRYYYYYYYYYYYYYYYYYYYYYYYYY" + expiry);
 
             // Remove existing OTPs for the user
             var existingOtp = await _context.otprecord
@@ -61,7 +61,7 @@ namespace Api.Service
 
             var secret = Convert.FromBase64String(otpRecord.secret); // Retrieve the same secret used during OTP generation
             var totp = new Totp(secret);
-            var isValid = totp.VerifyTotp(otp, out _);
+            var isValid = totp.VerifyTotp(otp.Trim(), out _);
             if (isValid)
             {
                 // OTP is valid and expired, remove it

@@ -23,9 +23,9 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts([FromQuery] int pageNumber=1,[FromQuery] int pageSize=10)
+        public async Task<IActionResult> GetAllProducts([FromQuery] int page=1,[FromQuery] int limit=10)
         {
-            var productsDomain = await _productService.GetAllProductsAsync(pageNumber,pageSize);
+            var productsDomain = await _productService.GetAllProductsAsync(page,limit);
             var productHomeDTOs=_mapper.Map<List<ProductHomeDTO>>(productsDomain);
             return Ok(productHomeDTOs);
         }

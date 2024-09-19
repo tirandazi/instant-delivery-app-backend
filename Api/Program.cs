@@ -14,7 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<IProductsRepository,ProductsRepository>();
 builder.Services.AddScoped<IProductService ,ProductService>();
+
+builder.Services.AddScoped<ICartRepository,CartRepository>();
+builder.Services.AddScoped<ICartItemsRepository,CartItemsRepository>();
+builder.Services.AddScoped<ICartService,CartService>();
+
 builder.Services.AddScoped<IOTPService,OTPService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
@@ -36,6 +42,14 @@ builder.Services.AddOpenTelemetry()
 builder.Services.AddDbContext<InstantAppDbContext>(options => 
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDbConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +62,9 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
+
+// Enable CORS
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
 
