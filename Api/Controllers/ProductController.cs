@@ -35,7 +35,7 @@ namespace Api.Controllers
         {
             var productDomain=await _productService.GetProductByIdAsync(id);
             if (productDomain == null){
-                return NotFound();
+                return NotFound("Product with that id not available");
             }
             return Ok(_mapper.Map<ProductInfoDTO>(productDomain));
         }

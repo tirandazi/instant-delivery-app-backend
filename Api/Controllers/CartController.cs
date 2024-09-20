@@ -14,9 +14,12 @@ namespace Api.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
-        public CartController(ICartService cartService)
+        private readonly IProductService _productService;
+
+        public CartController(ICartService cartService, IProductService productService)
         {
-            this._cartService = cartService;
+            _cartService = cartService;
+            _productService = productService;
         }
 
         [HttpPost]
@@ -37,10 +40,26 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCart([FromQuery] Guid customer_id){
-            var cart_id=await _cartService.FindCartByCustomerID(customer_id);
-            var cart_items= await _cartService.GetAllCartItemsAsync(cart_id.Value);
-            return Ok(cart_items);
+        public async Task<IActionResult> GetCart([FromQuery] Guid customer_id)
+        {
+            var cart_id = await _cartService.FindCartByCustomerID(customer_id);
+            if (cart_id == null)
+            {
+                return NotFound("Cart not found for the specified customer.");
+            }
+            var cart_items = await _cartService.GetAllCartItemsAsync(cart_id.Value);
+            List<CartItemsDTO> cartItemsDTOs = new List<CartItemsDTO>();
+            foreach (var item in cart_items)
+            {
+                var product = await _productService.GetProductByIdAsync(item.product_id);
+                if (product != null)
+                {
+                    cartItemsDTOs.Add(new CartItemsDTO { product_id = item.product_id, product_name = product.name, quantity = item.quantity, price = item.price });
+                }
+
+            }
+            CartAllDetailsDTO cartAllDetailsDTO= new CartAllDetailsDTO{id=cart_id.Value,customer_id=customer_id,cartItems=cartItemsDTOs};
+            return Ok(cartAllDetailsDTO);
         }
     }
 }
