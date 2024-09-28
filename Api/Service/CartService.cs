@@ -100,7 +100,14 @@ namespace Api.Service
                 {
                     //cart.Items.Remove(item);
                     item.quantity--;
-                    await _cartItemRepository.UpdateAsync(item);
+                    if (item.quantity <= 0)
+                    {
+                        await _cartItemRepository.DeleteAsync(cart_id, product_id);
+                    }
+                    else
+                    {
+                        await _cartItemRepository.UpdateAsync(item);
+                    }
                     await _cartRepository.UpdateAsync(cart);
                 }
             }
@@ -108,9 +115,9 @@ namespace Api.Service
 
         public async Task<bool> FindItemInCart(Guid cart_id, Guid product_id)
         {
-           
-                var item = await _cartItemRepository.GetByIdAsync(cart_id, product_id);
-                return item != null;
-            }
+
+            var item = await _cartItemRepository.GetByIdAsync(cart_id, product_id);
+            return item != null;
         }
     }
+}
