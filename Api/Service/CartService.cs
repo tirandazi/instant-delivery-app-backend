@@ -69,9 +69,48 @@ namespace Api.Service
             return cart?.id;
         }
 
-    public async Task<List<CartItems>> GetAllCartItemsAsync(Guid cart_id)
-    {
-      return await _cartItemRepository.GetAllCartItemsAsync(cart_id);
+        public async Task<List<CartItems>> GetAllCartItemsAsync(Guid cart_id)
+        {
+            return await _cartItemRepository.GetAllCartItemsAsync(cart_id);
+        }
+
+        public async Task IncrementQuantity(Guid cart_id, Guid product_id)
+        {
+            var cart = await _cartRepository.GetByIdAsync(cart_id);
+            if (cart != null)
+            {
+                var item = await _cartItemRepository.GetByIdAsync(cart_id, product_id);
+                if (item != null)
+                {
+                    //cart.Items.Remove(item);
+                    item.quantity++;
+                    await _cartItemRepository.UpdateAsync(item);
+                    await _cartRepository.UpdateAsync(cart);
+                }
+            }
+        }
+
+        public async Task DecrementQuantity(Guid cart_id, Guid product_id)
+        {
+            var cart = await _cartRepository.GetByIdAsync(cart_id);
+            if (cart != null)
+            {
+                var item = await _cartItemRepository.GetByIdAsync(cart_id, product_id);
+                if (item != null)
+                {
+                    //cart.Items.Remove(item);
+                    item.quantity--;
+                    await _cartItemRepository.UpdateAsync(item);
+                    await _cartRepository.UpdateAsync(cart);
+                }
+            }
+        }
+
+        public async Task<bool> FindItemInCart(Guid cart_id, Guid product_id)
+        {
+           
+                var item = await _cartItemRepository.GetByIdAsync(cart_id, product_id);
+                return item != null;
+            }
+        }
     }
-  }
-}

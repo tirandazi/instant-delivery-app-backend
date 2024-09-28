@@ -61,5 +61,36 @@ namespace Api.Controllers
             CartAllDetailsDTO cartAllDetailsDTO= new CartAllDetailsDTO{id=cart_id.Value,customer_id=customer_id,cartItems=cartItemsDTOs};
             return Ok(cartAllDetailsDTO);
         }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateQuantity([FromBody] UpdateCartDTO request){
+            if (request == null)
+            {
+                return BadRequest("Invalid request.");
+            }
+
+            // Access parameters from request object
+            var product_id = request.product_id;
+            var customer_id = request.customer_id;
+            var value = request.value;
+            var cart_id = await _cartService.FindCartByCustomerID(customer_id);
+            if (cart_id == null)
+            {
+                return NotFound("Cart not found for the specified customer.");
+            }
+            if (!await _cartService.FindItemInCart(cart_id.Value,product_id)){
+                return NotFound("Item in cart not found for the specified customer.");
+            }
+            if(value=="increment"){
+                await _cartService.IncrementQuantity(cart_id.Value,product_id);
+            }
+            else if(value=="decrement"){
+                await _cartService.DecrementQuantity(cart_id.Value,product_id);
+            }
+            else{
+                return BadRequest("Illegal value parameter");
+            }
+            return RedirectToAction("GetCart", new {customer_id=customer_id});
+        }
     }
 }
