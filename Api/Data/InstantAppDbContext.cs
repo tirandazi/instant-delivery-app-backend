@@ -15,5 +15,11 @@ namespace Api.Data
         public DbSet<OTPRecord> otprecord { get; set; }
         public DbSet<Cart> cart { get; set; }
         public DbSet<CartItems> cart_items { get; set; }
+        public DbSet<Customer> customer { get; set; }
+        public DbSet<Orders> orders { get; set; }
+        public DbSet<Store> store { get; set; }
+        public DbSet<DeliveryPartner> delivery_partner { get; set; }
+
+
     }
 }

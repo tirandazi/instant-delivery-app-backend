@@ -19,6 +19,10 @@ builder.Services.AddScoped<ICartRepository,CartRepository>();
 builder.Services.AddScoped<ICartItemsRepository,CartItemsRepository>();
 builder.Services.AddScoped<ICartService,CartService>();
 
+builder.Services.AddScoped<IOrdersRepository,OrdersRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+
 builder.Services.AddScoped<IOTPService,OTPService>();
 
 builder.Services.AddControllers();

@@ -14,5 +14,6 @@ namespace Api.Data.Repository.Contracts
         Task UpdateAsync(Cart cart);
         Task DeleteAsync(Guid id);
         Task<Cart?> FindCartByCustomerId(Guid id);
+        Task ChangeCartStatusAsync(Cart cart);
     }
 }

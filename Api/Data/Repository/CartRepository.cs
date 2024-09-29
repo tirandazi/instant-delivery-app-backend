@@ -51,5 +51,10 @@ namespace Api.Data.Repository
       //return await _context.cart.Where(c => c.customer_id == id).ToListAsync();
             return await _context.cart.FirstOrDefaultAsync(c=> c.customer_id == id);
         }
+
+        public async Task ChangeCartStatusAsync(Cart cart){
+            cart.status = "Ordered";
+            await _context.SaveChangesAsync();
+        }
     }
 }
