@@ -49,7 +49,7 @@ namespace Api.Data.Repository
         public async Task<Cart?> FindCartByCustomerId(Guid id)
         {
       //return await _context.cart.Where(c => c.customer_id == id).ToListAsync();
-            return await _context.cart.FirstOrDefaultAsync(c=> c.customer_id == id);
+            return await _context.cart.FirstOrDefaultAsync(c=> c.customer_id == id && c.status=="Pending");
         }
 
         public async Task ChangeCartStatusAsync(Cart cart){

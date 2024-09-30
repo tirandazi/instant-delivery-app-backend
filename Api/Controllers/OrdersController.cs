@@ -25,6 +25,10 @@ namespace Api.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDTO createOrderDTO){
+            var cart_id=await cartService.FindCartByCustomerID(createOrderDTO.customer_id);
+            if(cart_id!=createOrderDTO.cart_id){
+                return BadRequest("No such cart for customer");
+            }
             var order=await orderService.GetOrderByCartAsync(createOrderDTO.cart_id);
             if (order!=null){
                 return BadRequest("Already ordered");
